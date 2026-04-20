@@ -190,14 +190,20 @@ const getVideoDetails = async (req, res) => {
 const getThumbnail = async (req, res) => {
   try {
     const rawKey = req.params[0];
-    const key = rawKey ? decodeURI(rawKey) : null;
+    const filename = rawKey ? decodeURI(rawKey) : null;
 
-    if (!key) {
+    if (!filename) {
       return res.status(400).json({
         success: false,
         message: 'Thumbnail key is required',
       });
     }
+
+    // req.params[0] is the wildcard after /thumbnails/ in the route
+    // the actual S3 key always has the thumbnails/ prefix
+    const key = filename.startsWith('thumbnails/')
+      ? filename
+      : `thumbnails/${filename}`;
 
     const bucket = process.env.AWS_S3_BUCKET;
     if (!bucket) {

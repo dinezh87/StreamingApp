@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: streamingapp-configmap
+  namespace: streamingapp
+data:
+  MONGO_URI: "mongodb://mongo-service:27017/streamingapp"
+  AWS_REGION: "us-west-1"
+  AWS_S3_BUCKET: "dineshb14-streamingapp"
+  CLIENT_URLS: "http://localhost"
+  NODE_ENV: "development"
+  STREAMING_PUBLIC_URL: "http://localhost"
+  AWS_CDN_URL: ""
